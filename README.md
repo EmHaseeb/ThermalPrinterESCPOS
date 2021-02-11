@@ -217,7 +217,7 @@ public void printUsb() {
 The code below is an example to write in your activity :
 
 ```java
-EscPosPrinter printer = new EscPosPrinter(new UsbConnection(usbManager, usbDevice), 203, 48f, 32);
+EscPosPrinter printer = new EscPosPrinter(new UsbConnection(usbManager, usbDevice), 203, 65f, 42);
 printer
     .printFormattedText(
         "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, getApplicationContext().getResources().getDrawableForDensity(R.drawable.testp, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
