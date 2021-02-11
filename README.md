@@ -124,6 +124,7 @@ printer
                         "[L] <qrcode>http://github.com/EmHaseeb/</qrcode>\n"+
                         "[L]\n [L]\n"
     );
+                        printer.disconnectPrinter();
 ```
 
 ## TCP
@@ -166,6 +167,7 @@ new Thread(new Runnable() {
                         "[L] <qrcode>http://github.com/EmHaseeb/</qrcode>\n"+
                         "[L]\n [L]\n"
                 );
+		printer.disconnectPrinter();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,6 +246,7 @@ printer
                         "[L]\n [L]\n"
 		
     );
+    printer.disconnectPrinter();
 ```
 
 Below a picture of the receipt printed with the code above :
