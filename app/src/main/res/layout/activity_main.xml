@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Click to print !"
+            android:text="Click to print"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -25,14 +25,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Print by bluetooth !" />
+            android:text="Print by bluetooth" />
 
         <Button
             android:id="@+id/button_usb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Print by USB !" />
+            android:text="Print by USB" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -54,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/outline"
                 android:digits="0123456789."
-                android:hint="192.168.18.29"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="@color/white"
@@ -74,7 +73,6 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/outline"
-                android:hint="9100"
                 android:inputType="number"
                 android:padding="10dp"
                 android:text="9100"
@@ -86,6 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Print by TCP !" />
+
+        <Button
+            android:id="@+id/openCashBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Cash Box" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

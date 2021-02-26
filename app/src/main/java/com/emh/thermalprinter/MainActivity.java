@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     Activity activity = MainActivity.this;
 
-    Button bt, tcp, usb;
+    Button bt, tcp, usb, cashBox;
     EditText ip, port;
 
     @Override
@@ -57,7 +57,22 @@ public class MainActivity extends AppCompatActivity {
         usb = findViewById(R.id.button_usb);
         ip = findViewById(R.id.edittext_tcp_ip);
         port = findViewById(R.id.edittext_tcp_port);
+        cashBox = findViewById(R.id.openCashBox);
 
+        cashBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ip.getText().toString().length() > 0 && port.getText().toString().length() > 0) {
+
+                    openCashBox(ip.getText().toString(), Integer.parseInt(port.getText().toString()));
+
+                } else {
+                    Toast.makeText(activity, "IP or Port is In-Correct!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +104,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*==============================================================================================
-    ======================================BLUETOOTH PART============================================
-    ==============================================================================================*/
+    /**
+     * Open Cash Box Only Part
+     */
+
+
+    public void openCashBox(String ip, int port) {
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    EscPosPrinter printer = new EscPosPrinter(new TcpConnection(ip, port), 203, 65f, 42);
+                    printer.openCashBox();
+                    printer.disconnectPrinter();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    /**
+     * BLUETOOTH PART
+     */
 
     public static final int PERMISSION_BLUETOOTH = 1;
 
@@ -166,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*==============================================================================================
-    ===========================================USB PART=============================================
-    ==============================================================================================*/
+    /**
+     * USB PART
+     */
 
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
@@ -263,9 +299,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*==============================================================================================
-    =========================ESC/POS - Wifi/Ethernet/Network PRINTER PART===========================
-    ================================================================================================*/
+    /**
+     * ESC/POS - Wifi/Ethernet/Network PRINTER PART
+     */
+
 
     public void printTcp(String ip, int port) {
 
