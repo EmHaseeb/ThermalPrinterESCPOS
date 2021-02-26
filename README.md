@@ -10,6 +10,11 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 
 ## 	❤️ Whats New! ![](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)
 
+- CashTray/CashBox/CashDrawer Support Added.
+- Encoding Improvemed.
+- CashTray related function are mentioned below:
+
+
 ## Table of contents
 
 - [Android version](#android-version)
