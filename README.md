@@ -8,7 +8,7 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 
 ⭐ Star this repository to support this library. You can contribute to increase the visibility of this library 🙂
 
-## 	❤️ Whats New in https://img.shields.io/badge/-1.0.1-green
+## 	❤️ Whats New in ![](https://img.shields.io/badge/-1.0.1-green)
 
 - CashTray/CashBox/CashDrawer Support Added.
 - Encoding Improvemed.
