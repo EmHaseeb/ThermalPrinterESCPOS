@@ -1,5 +1,5 @@
 [![Jitpack package repository - ThermalPrinter ESC/POS v1.0](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)](https://jitpack.io/#DantSu/ESCPOS-ThermalPrinter-Android/2.0.8)
-[![License: Apache 2.0](https://img.shields.io/badge/License-APACHE-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache-blue)](https://www.apache.org/licenses/LICENSE-2.0)
 # ThermalPrinter ESC/POS Android library
 
 Useful library to help Android developers to print with (Bluetooth, WIFI, Network, USB) thermal printers ESC/POS.
