@@ -376,7 +376,7 @@ Prints a QR code with a width and height of 25 millimeters.
 
 ## Class list
 
-### Class : `com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections`
+### Class : `com.emh.thermalprinter.connection.bluetooth.BluetoothPrintersConnections`
 
 #### **Static** Method : `selectFirstPaired()`
 Easy way to get the first bluetooth printer paired / connected.
@@ -386,7 +386,7 @@ Easy way to get the first bluetooth printer paired / connected.
 Get a list of bluetooth printers.
 - **return** `BluetoothConnection[]`
 
-### Class : `com.dantsu.escposprinter.connection.usb.UsbPrintersConnections`
+### Class : `com.emh.thermalprinter.connection.usb.UsbPrintersConnections`
 
 #### **Static** Method : `selectFirstConnected()`
 Easy way to get the first USB printer connected.
@@ -396,7 +396,7 @@ Easy way to get the first USB printer connected.
 Get a list of USB printers.
 - **return** `UsbConnection[]`
 
-### Class : `com.dantsu.escposprinter.EscPosPrinter`
+### Class : `com.emh.thermalprinter.EscPosPrinter`
 
 #### Constructor : `EscPosPrinter(DeviceConnection printer, int printerDpi, float printingWidthMM, int nbrCharactersPerLine [, EscPosCharsetEncoding charsetEncoding])`
 - **param** `DeviceConnection printer` : Instance of a connected printer
@@ -456,6 +456,12 @@ Print a formatted text, feed paper (`mmFeedPaper` millimeters) and cut the paper
 - **param** `float mmFeedPaper` : Millimeter distance feed paper at the end.
 - **return** `Printer` : Fluent interface
 
+#### Method : `printFormattedTextAndOpenCashBox(String text, float mmFeedPaper)`
+Print a formatted text, feed paper (`mmFeedPaper` millimeters), cut the paper and open the cash box. Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
+- **param** `String text` : Formatted text to be printed.
+- **param** `float mmFeedPaper` : Millimeter distance feed paper at the end.
+- **return** `Printer` : Fluent interface
+
 #### Method : `printFormattedText(String text, int dotsFeedPaper)`
 Print a formatted text and feed paper (`dotsFeedPaper` dots). Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
 - **param** `String text` : Formatted text to be printed.
@@ -468,12 +474,18 @@ Print a formatted text, feed paper (`dotsFeedPaper` dots) and cut the paper. Rea
 - **param** `int dotsFeedPaper` : Distance feed paper at the end.
 - **return** `Printer` : Fluent interface
 
+#### Method : `printFormattedTextAndOpenCashBox(String text, int dotsFeedPaper)`
+Print a formatted text, feed paper (`dotsFeedPaper` dots), cut the paper and open the cash box. Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
+- **param** `String text` : Formatted text to be printed.
+- **param** `int dotsFeedPaper` : Distance feed paper at the end.
+- **return** `Printer` : Fluent interface
+
 #### Method : `bitmapToBytes(Bitmap bitmap)`
 Convert Bitmap object to ESC/POS image.
 - **param** `Bitmap bitmap` : Instance of Bitmap
 - **return** `byte[]` : Bytes contain the image in ESC/POS command
 
-### Class : `com.dantsu.escposprinter.textparser.PrinterTextParserImg`
+### Class : `com.emh.thermalprinter.textparser.PrinterTextParserImg`
 
 #### **Static** Method : `bitmapToHexadecimalString(Printer printer, Drawable drawable)`
 Convert Drawable instance to a hexadecimal string of the image data.
@@ -503,7 +515,7 @@ Convert hexadecimal string of the image data to bytes ESC/POS command.
 - **param** `String hexString` : Hexadecimal string of the image data.
 - **return** `byte[]` : Bytes contain the image in ESC/POS command.
 
-### Class : `com.dantsu.escposprinter.EscPosCharsetEncoding`
+### Class : `com.emh.thermalprinter.EscPosCharsetEncoding`
 
 #### Constructor : `EscPosCharsetEncoding(String charsetName, int escPosCharsetId)`
 - **param** `charsetName` Name of charset encoding (Ex: ISO-8859-1)
