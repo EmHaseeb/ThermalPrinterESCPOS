@@ -73,7 +73,7 @@ allprojects {
 ```
 dependencies {
     ...
-    implementation 'com.github.EmHaseeb:ThermalPrinterESCPOS:1.0.0'
+    implementation 'com.github.EmHaseeb:ThermalPrinterESCPOS:1.0.1'
 }
 ```
 
