@@ -1,5 +1,5 @@
-[![Jitpack package repository - ThermalPrinter ESC/POS v1.0](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)](https://jitpack.io/#DantSu/ESCPOS-ThermalPrinter-Android/2.0.8)
-[![License: Apache 2.0](https://img.shields.io/badge/License-APACHE-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Jitpack package repository - ThermalPrinter ESC/POS v1.0](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)](https://jitpack.io/#EmHaseeb/ThermalPrinterESCPOS/1.0.0)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache-blue)](https://www.apache.org/licenses/LICENSE-2.0)
 # ThermalPrinter ESC/POS Android library
 
 Useful library to help Android developers to print with (Bluetooth, WIFI, Network, USB) thermal printers ESC/POS.
@@ -26,11 +26,11 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 - [Charset encoding](#charset-encoding)
 - [Formatted text : syntax guide](#formatted-text--syntax-guide)
 - [Class list](#class-list)
-  - [BluetoothPrintersConnections](#user-content-class--comdantsuescposprinterconnectionbluetoothbluetoothprintersconnections)
-  - [UsbPrintersConnections](#user-content-class--comdantsuescposprinterconnectionusbusbprintersconnections)
-  - [EscPosPrinter](#user-content-class--comdantsuescposprinterescposprinter)
-  - [PrinterTextParserImg](#user-content-class--comdantsuescposprintertextparserprintertextparserimg)
-  - [EscPosCharsetEncoding](#user-content-class--comdantsuescposprinterescposcharsetencoding)
+  - [BluetoothPrintersConnections](#user-content-class--comemhthermalprinterconnectionbluetoothbluetoothprintersconnections)
+  - [UsbPrintersConnections](#user-content-class--comemhthermalprinterconnectionusbusbprintersconnections)
+  - [EscPosPrinter](#user-content-class--comemhthermalprinterescposprinter)
+  - [PrinterTextParserImg](#user-content-class--comemhthermalprintertextparserprintertextparserimg)
+  - [EscPosCharsetEncoding](#user-content-class--comemhthermalprinterescposcharsetencoding)
 - [Contributing](#contributing)
 
 
@@ -73,7 +73,7 @@ allprojects {
 ```
 dependencies {
     ...
-    implementation 'com.github.EmHaseeb:ThermalPrinterESCPOS:1.0'
+    implementation 'com.github.EmHaseeb:ThermalPrinterESCPOS:1.0.0'
 }
 ```
 
@@ -348,7 +348,7 @@ Prints a EAN8 barcode (height: 10mm, width: ~70% printer width, text: displayed 
 Prints a UPC-A barcode (height: 20mm, width: ~70% printer width, text: displayed below).
 - `<barcode type='upce' height='25' width='50' text='none'>512789</barcode>` : **(6 numbers)**  
 Prints a UPC-E barcode (height: 25mm, width: ~50mm, text: hidden).
-- `<barcode type='128' width='40' text='above'>DantSu</barcode>` : **(string)**  
+- `<barcode type='128' width='40' text='above'>EmHaseeb</barcode>` : **(string)**  
 Prints a barcode 128 (height: 10mm, width: ~40mm, text: displayed above).
 
 **⚠ WARNING ⚠** : This tag has several constraints :
@@ -362,7 +362,7 @@ Prints a barcode 128 (height: 10mm, width: ~40mm, text: displayed above).
 
 `<qrcode></qrcode>` tag allows you to print a QR code. Inside the tag you need to write the QR code data.
 
-- `<qrcode>http://www.developpeur-web.dantsu.com/</qrcode>` :
+- `<qrcode>http://www.github.com/</qrcode>` :
 Prints a QR code with a width and height of 20 millimeters.
 - `<qrcode size='25'>123456789</qrcode>` :
 Prints a QR code with a width and height of 25 millimeters.
@@ -376,7 +376,7 @@ Prints a QR code with a width and height of 25 millimeters.
 
 ## Class list
 
-### Class : `com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections`
+### Class : `com.emh.thermalprinter.connection.bluetooth.BluetoothPrintersConnections`
 
 #### **Static** Method : `selectFirstPaired()`
 Easy way to get the first bluetooth printer paired / connected.
@@ -386,7 +386,7 @@ Easy way to get the first bluetooth printer paired / connected.
 Get a list of bluetooth printers.
 - **return** `BluetoothConnection[]`
 
-### Class : `com.dantsu.escposprinter.connection.usb.UsbPrintersConnections`
+### Class : `com.emh.thermalprinter.connection.usb.UsbPrintersConnections`
 
 #### **Static** Method : `selectFirstConnected()`
 Easy way to get the first USB printer connected.
@@ -396,7 +396,7 @@ Easy way to get the first USB printer connected.
 Get a list of USB printers.
 - **return** `UsbConnection[]`
 
-### Class : `com.dantsu.escposprinter.EscPosPrinter`
+### Class : `com.emh.thermalprinter.EscPosPrinter`
 
 #### Constructor : `EscPosPrinter(DeviceConnection printer, int printerDpi, float printingWidthMM, int nbrCharactersPerLine [, EscPosCharsetEncoding charsetEncoding])`
 - **param** `DeviceConnection printer` : Instance of a connected printer
@@ -456,6 +456,12 @@ Print a formatted text, feed paper (`mmFeedPaper` millimeters) and cut the paper
 - **param** `float mmFeedPaper` : Millimeter distance feed paper at the end.
 - **return** `Printer` : Fluent interface
 
+#### Method : `printFormattedTextAndOpenCashBox(String text, float mmFeedPaper)`
+Print a formatted text, feed paper (`mmFeedPaper` millimeters), cut the paper and open the cash box. Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
+- **param** `String text` : Formatted text to be printed.
+- **param** `float mmFeedPaper` : Millimeter distance feed paper at the end.
+- **return** `Printer` : Fluent interface
+
 #### Method : `printFormattedText(String text, int dotsFeedPaper)`
 Print a formatted text and feed paper (`dotsFeedPaper` dots). Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
 - **param** `String text` : Formatted text to be printed.
@@ -468,12 +474,18 @@ Print a formatted text, feed paper (`dotsFeedPaper` dots) and cut the paper. Rea
 - **param** `int dotsFeedPaper` : Distance feed paper at the end.
 - **return** `Printer` : Fluent interface
 
+#### Method : `printFormattedTextAndOpenCashBox(String text, int dotsFeedPaper)`
+Print a formatted text, feed paper (`dotsFeedPaper` dots), cut the paper and open the cash box. Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
+- **param** `String text` : Formatted text to be printed.
+- **param** `int dotsFeedPaper` : Distance feed paper at the end.
+- **return** `Printer` : Fluent interface
+
 #### Method : `bitmapToBytes(Bitmap bitmap)`
 Convert Bitmap object to ESC/POS image.
 - **param** `Bitmap bitmap` : Instance of Bitmap
 - **return** `byte[]` : Bytes contain the image in ESC/POS command
 
-### Class : `com.dantsu.escposprinter.textparser.PrinterTextParserImg`
+### Class : `com.emh.thermalprinter.textparser.PrinterTextParserImg`
 
 #### **Static** Method : `bitmapToHexadecimalString(Printer printer, Drawable drawable)`
 Convert Drawable instance to a hexadecimal string of the image data.
@@ -503,7 +515,7 @@ Convert hexadecimal string of the image data to bytes ESC/POS command.
 - **param** `String hexString` : Hexadecimal string of the image data.
 - **return** `byte[]` : Bytes contain the image in ESC/POS command.
 
-### Class : `com.dantsu.escposprinter.EscPosCharsetEncoding`
+### Class : `com.emh.thermalprinter.EscPosCharsetEncoding`
 
 #### Constructor : `EscPosCharsetEncoding(String charsetName, int escPosCharsetId)`
 - **param** `charsetName` Name of charset encoding (Ex: ISO-8859-1)
