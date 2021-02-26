@@ -1,4 +1,4 @@
-[![Jitpack package repository - ThermalPrinter ESC/POS v1.0](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)](https://jitpack.io/#DantSu/ESCPOS-ThermalPrinter-Android/2.0.8)
+[![Jitpack package repository - ThermalPrinter ESC/POS v1.0](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)](https://jitpack.io/#EmHaseeb/ThermalPrinterESCPOS/1.0.0)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache-blue)](https://www.apache.org/licenses/LICENSE-2.0)
 # ThermalPrinter ESC/POS Android library
 
@@ -26,11 +26,11 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 - [Charset encoding](#charset-encoding)
 - [Formatted text : syntax guide](#formatted-text--syntax-guide)
 - [Class list](#class-list)
-  - [BluetoothPrintersConnections](#user-content-class--comdantsuescposprinterconnectionbluetoothbluetoothprintersconnections)
-  - [UsbPrintersConnections](#user-content-class--comdantsuescposprinterconnectionusbusbprintersconnections)
-  - [EscPosPrinter](#user-content-class--comdantsuescposprinterescposprinter)
-  - [PrinterTextParserImg](#user-content-class--comdantsuescposprintertextparserprintertextparserimg)
-  - [EscPosCharsetEncoding](#user-content-class--comdantsuescposprinterescposcharsetencoding)
+  - [BluetoothPrintersConnections](#user-content-class--comemhthermalprinterconnectionbluetoothbluetoothprintersconnections)
+  - [UsbPrintersConnections](#user-content-class--comemhthermalprinterconnectionusbusbprintersconnections)
+  - [EscPosPrinter](#user-content-class--comemhthermalprinterescposprinter)
+  - [PrinterTextParserImg](#user-content-class--comemhthermalprintertextparserprintertextparserimg)
+  - [EscPosCharsetEncoding](#user-content-class--comemhthermalprinterescposcharsetencoding)
 - [Contributing](#contributing)
 
 
@@ -348,7 +348,7 @@ Prints a EAN8 barcode (height: 10mm, width: ~70% printer width, text: displayed 
 Prints a UPC-A barcode (height: 20mm, width: ~70% printer width, text: displayed below).
 - `<barcode type='upce' height='25' width='50' text='none'>512789</barcode>` : **(6 numbers)**  
 Prints a UPC-E barcode (height: 25mm, width: ~50mm, text: hidden).
-- `<barcode type='128' width='40' text='above'>DantSu</barcode>` : **(string)**  
+- `<barcode type='128' width='40' text='above'>EmHaseeb</barcode>` : **(string)**  
 Prints a barcode 128 (height: 10mm, width: ~40mm, text: displayed above).
 
 **⚠ WARNING ⚠** : This tag has several constraints :
@@ -362,7 +362,7 @@ Prints a barcode 128 (height: 10mm, width: ~40mm, text: displayed above).
 
 `<qrcode></qrcode>` tag allows you to print a QR code. Inside the tag you need to write the QR code data.
 
-- `<qrcode>http://www.developpeur-web.dantsu.com/</qrcode>` :
+- `<qrcode>http://www.github.com/</qrcode>` :
 Prints a QR code with a width and height of 20 millimeters.
 - `<qrcode size='25'>123456789</qrcode>` :
 Prints a QR code with a width and height of 25 millimeters.
