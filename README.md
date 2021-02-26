@@ -8,7 +8,7 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 
 ⭐ Star this repository to support this library. You can contribute to increase the visibility of this library 🙂
 
-## Table of contents.
+## Table of contents
 
 - [Android version](#android-version)
 - [Tested printers](#tested-printers)
