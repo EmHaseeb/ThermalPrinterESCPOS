@@ -8,6 +8,8 @@ Useful library to help Android developers to print with (Bluetooth, WIFI, Networ
 
 ⭐ Star this repository to support this library. You can contribute to increase the visibility of this library 🙂
 
+## 	❤️ Whats New! [![](https://jitpack.io/v/EmHaseeb/ThermalPrinterESCPOS.svg)]
+
 ## Table of contents
 
 - [Android version](#android-version)
