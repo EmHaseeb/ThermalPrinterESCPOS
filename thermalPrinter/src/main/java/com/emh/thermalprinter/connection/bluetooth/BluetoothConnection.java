@@ -60,8 +60,7 @@ public class BluetoothConnection extends DeviceConnection {
         }
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        ParcelUuid[] uuids = this.device.getUuids();
-        UUID uuid = (uuids != null && uuids.length > 0) ? uuids[0].getUuid() : UUID.randomUUID();
+        UUID uuid = getDeviceUUID();
 
         try {
             this.socket = this.device.createRfcommSocketToServiceRecord(uuid);
@@ -75,6 +74,18 @@ public class BluetoothConnection extends DeviceConnection {
             throw new EscPosConnectionException("Unable to connect to bluetooth device.");
         }
         return this;
+    }
+
+    /**
+     * Get bluetooth device UUID
+     */
+    @SuppressLint("MissingPermission")
+    protected UUID getDeviceUUID() {
+        ParcelUuid[] uuids = device.getUuids();
+        // https://developer.android.com/reference/android/bluetooth/BluetoothDevice
+        UUID sppUid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+
+        return (uuids != null && uuids.length > 0) ? uuids[0].getUuid() : sppUid;
     }
 
     /**
