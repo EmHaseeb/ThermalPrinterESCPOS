@@ -133,13 +133,19 @@ dependencies {
 
 ### Bluetooth permission
 
-Be sure to have `<uses-permission android:name="android.permission.BLUETOOTH" />` in your `AndroidMenifest.xml`.
+Be sure to have `<uses-permission android:name="android.permission.BLUETOOTH" />`, `<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />`, `<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />`, `<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />` in your `AndroidManifest.xml`.
 
 Also, you have to check the bluetooth permission in your app like this :
 
 ```java
-if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH}, MainActivity.PERMISSION_BLUETOOTH);
+} else if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
+    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN}, MainActivity.PERMISSION_BLUETOOTH_ADMIN);
+} else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, MainActivity.PERMISSION_BLUETOOTH_CONNECT);
+} else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, MainActivity.PERMISSION_BLUETOOTH_SCAN);
 } else {
     // Your code HERE
 }
@@ -259,7 +265,12 @@ public void printUsb() {
     UsbConnection usbConnection = UsbPrintersConnections.selectFirstConnected(this);
     UsbManager usbManager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
     if (usbConnection != null && usbManager != null) {
-        PendingIntent permissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(MainActivity.ACTION_USB_PERMISSION), 0);
+        PendingIntent permissionIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            new Intent(MainActivity.ACTION_USB_PERMISSION),
+            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0
+        );
         IntentFilter filter = new IntentFilter(MainActivity.ACTION_USB_PERMISSION);
         registerReceiver(this.usbReceiver, filter);
         usbManager.requestPermission(usbConnection.getDevice(), permissionIntent);
@@ -354,6 +365,11 @@ Example :
 - `<font size='wide'>Some text</font>` : Double width of medium size
 - `<font size='tall'>Some text</font>` : Double height of medium size
 - `<font size='big'>Some text</font>` : Double width and height of medium size
+- `<font size='big-2'>Some text</font>` : 3 x width and height
+- `<font size='big-3'>Some text</font>` : 4 x width and height
+- `<font size='big-4'>Some text</font>` : 5 x width and height
+- `<font size='big-5'>Some text</font>` : 6 x width and height
+- `<font size='big-6'>Some text</font>` : 7 x width and height
 
 - `<font color='black'>Some text</font>` : black text - white background
 - `<font color='bg-black'>Some text</font>` : white text - black background
@@ -387,6 +403,7 @@ Use `PrinterTextParserImg.bitmapToHexadecimalString` to convert `Drawable`, `Bit
 - `<img>` must be directly preceded by nothing or an alignment tag (`[L][C][R]`).
 - `</img>` must be directly followed by a new line `\n`.
 - You can't write text on a line that contains `<img></img>`.
+- Maximum height of printed image is 256px, If you want to print larger bitmap.
 
 ### Barcode
 
@@ -437,6 +454,14 @@ Easy way to get the first bluetooth printer paired / connected.
 #### Method : `getList()`
 Get a list of bluetooth printers.
 - **return** `BluetoothConnection[]`
+⚠️ If the arrray returned by `getList()` does not contain you printer or if `selectFirstPaired()` does not return your printer.
+
+### Class : `com.emh.thermalprinter.connection.tcp.TcpConnection`
+
+#### Constructor : `TcpConnection(String address, int port[, int timeout])`
+- **param** `String address` : Targeted ip address
+- **param** `int port` : Targeted tcp port
+- **param** `int timeout` *(optional)* : Connection timeout (default : 30)
 
 ### Class : `com.emh.thermalprinter.connection.usb.UsbPrintersConnections`
 
@@ -485,6 +510,11 @@ Get the number of dot that a printed character contain
 Convert the mmSize variable from millimeters to dot.
 - **param** `float mmSize` : Distance in millimeters to be converted
 - **return** `int` : Dot size of mmSize.
+
+#### Method : `useEscAsteriskCommand(boolean enable)`
+Active "ESC *" command for image printing.
+- **param** `boolean enable` : true to use "ESC *", false to use "GS v 0"
+- **return** `Printer` : Fluent interface
 
 #### Method : `printFormattedText(String text)`
 Print a formatted text and feed paper (20 millimeters). Read the ["Formatted Text : Syntax guide" section](#formatted-text--syntax-guide) for more information about text formatting options.
@@ -543,18 +573,21 @@ Convert Bitmap object to ESC/POS image.
 Convert Drawable instance to a hexadecimal string of the image data.
 - **param** `Printer printer` : A Printer instance that will print the image.
 - **param** `Drawable drawable` : Drawable instance to be converted.
+- **param** `boolean gradient` *(optional)* : `false` Black and white image, `true` Grayscale image (Default : `true`)
 - **return** `String` : A hexadecimal string of the image data. Empty string if Drawable cannot be cast to BitmapDrawable.
 
-#### **Static** Method : `bitmapToHexadecimalString(Printer printer, BitmapDrawable bitmapDrawable)`
+#### **Static** Method : `bitmapToHexadecimalString(Printer printer, BitmapDrawable bitmapDrawable [, boolean gradient])`
 Convert BitmapDrawable instance to a hexadecimal string of the image data.
 - **param** `Printer printer` : A Printer instance that will print the image.
 - **param** `BitmapDrawable bitmapDrawable` : BitmapDrawable instance to be converted.
+- **param** `boolean gradient` *(optional)* : `false` Black and white image, `true` Grayscale image (Default : `true`)
 - **return** `String` : A hexadecimal string of the image data.
 
-#### **Static** Method : `bitmapToHexadecimalString(Printer printer, Bitmap bitmap)`
+#### **Static** Method : `bitmapToHexadecimalString(Printer printer, Bitmap bitmap [, boolean gradient])`
 Convert Bitmap instance to a hexadecimal string of the image data.
 - **param** `Printer printer` : A Printer instance that will print the image.
 - **param** `Bitmap bitmap` : Bitmap instance to be converted.
+- **param** `boolean gradient` *(optional)* : `false` Black and white image, `true` Grayscale image (Default : `true`)
 - **return** `String` : A hexadecimal string of the image data.
 
 #### **Static** Method : `bytesToHexadecimalString(byte[] bytes)`
