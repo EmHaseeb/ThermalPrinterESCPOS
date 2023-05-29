@@ -562,9 +562,10 @@ Print a formatted text, feed paper (`dotsFeedPaper` dots), cut the paper and ope
 - **param** `int dotsFeedPaper` : Distance feed paper at the end.
 - **return** `Printer` : Fluent interface
 
-#### Method : `bitmapToBytes(Bitmap bitmap)`
+#### Method : `bitmapToBytes(Bitmap bitmap, boolean gradient)`
 Convert Bitmap object to ESC/POS image.
 - **param** `Bitmap bitmap` : Instance of Bitmap
+- **param** `boolean gradient` : `false` Black and white image, `true` Grayscale image
 - **return** `byte[]` : Bytes contain the image in ESC/POS command
 
 ### Class : `com.emh.thermalprinter.textparser.PrinterTextParserImg`
