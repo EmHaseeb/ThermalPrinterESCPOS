@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.emh.thermalprinter.EscPosPrinter;
 import com.emh.thermalprinter.connection.DeviceConnection;
+import com.emh.thermalprinter.connection.bluetooth.BluetoothConnection;
 import com.emh.thermalprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.emh.thermalprinter.connection.tcp.TcpConnection;
 import com.emh.thermalprinter.connection.usb.UsbConnection;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     Activity activity = MainActivity.this;
 
-    Button bt, tcp, usb, cashBox;
+    Button bt, tcp, usb, cashBox, btBrowse;
     EditText ip, port;
 
     @Override
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btBrowse = findViewById(R.id.browse_bt);
         bt = findViewById(R.id.button_bluetooth);
         tcp = findViewById(R.id.button_tcp);
         usb = findViewById(R.id.button_usb);
@@ -71,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(activity, "IP or Port is In-Correct!", Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        btBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browseBluetoothDevice();
             }
         });
 
@@ -138,6 +147,42 @@ public class MainActivity extends AppCompatActivity {
         void onPermissionsGranted();
     }
     public OnBluetoothPermissionsGranted onBluetoothPermissionsGranted;
+
+    private BluetoothConnection selectedDevice;
+    public void browseBluetoothDevice() {
+        this.checkBluetoothPermissions(() -> {
+            final BluetoothConnection[] bluetoothDevicesList = (new BluetoothPrintersConnections()).getList();
+
+            if (bluetoothDevicesList != null) {
+                final String[] items = new String[bluetoothDevicesList.length + 1];
+                items[0] = "Default printer";
+                int i = 0;
+                for (BluetoothConnection device : bluetoothDevicesList) {
+                    items[++i] = device.getDevice().getName();
+                }
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                alertDialog.setTitle("Bluetooth printer selection");
+                alertDialog.setItems(
+                        items,
+                        (dialogInterface, i1) -> {
+                            int index = i1 - 1;
+                            if (index == -1) {
+                                selectedDevice = null;
+                            } else {
+                                selectedDevice = bluetoothDevicesList[index];
+                            }
+                            btBrowse.setText(items[i1]);
+                        }
+                );
+
+                AlertDialog alert = alertDialog.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
+            }
+        });
+
+    }
     public void printBluetooth() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {

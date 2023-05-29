@@ -20,12 +20,30 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button_bluetooth"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Print by bluetooth" />
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_bluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="Print by bluetooth" />
+
+            <Button
+                android:id="@+id/browse_bt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:text="Default Printer" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_usb"
