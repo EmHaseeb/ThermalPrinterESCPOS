@@ -28,6 +28,9 @@ public class TcpConnection extends DeviceConnection {
     /**
      * Create un instance of TcpConnection.
      *
+     * Overload of the above function TcpConnection()
+     * Include timeout parameter in milliseconds.
+     *
      * @param address IP address of the device
      * @param port    Port of the device
      * @param timeout Timeout in milliseconds to establish a connection
