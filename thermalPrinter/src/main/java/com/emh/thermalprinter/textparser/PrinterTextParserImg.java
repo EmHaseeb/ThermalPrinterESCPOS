@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import com.emh.thermalprinter.EscPosPrinter;
 import com.emh.thermalprinter.EscPosPrinterCommands;
 import com.emh.thermalprinter.EscPosPrinterSize;
+import com.emh.thermalprinter.exceptions.EscPosConnectionException;
 import com.emh.thermalprinter.exceptions.EscPosEncodingException;
 
 
@@ -153,7 +154,7 @@ public class PrinterTextParserImg implements IPrinterTextParserElement {
      * @return this Fluent method
      */
     @Override
-    public PrinterTextParserImg print(EscPosPrinterCommands printerSocket) {
+    public PrinterTextParserImg print(EscPosPrinterCommands printerSocket) throws EscPosConnectionException {
         printerSocket.printImage(this.image);
         return this;
     }
