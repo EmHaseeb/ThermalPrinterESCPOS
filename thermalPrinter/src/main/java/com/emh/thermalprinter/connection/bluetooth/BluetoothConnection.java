@@ -60,7 +60,7 @@ public class BluetoothConnection extends DeviceConnection {
         }
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        UUID uuid = getDeviceUUID();
+        UUID uuid = this.getDeviceUUID();
 
         try {
             this.socket = this.device.createRfcommSocketToServiceRecord(uuid);
@@ -81,11 +81,9 @@ public class BluetoothConnection extends DeviceConnection {
      */
     @SuppressLint("MissingPermission")
     protected UUID getDeviceUUID() {
+        // https://developer.android.com/reference/android/bluetooth/BluetoothDevice - "00001101-0000-1000-8000-00805f9b34fb" SPP UUID
         ParcelUuid[] uuids = device.getUuids();
-        // https://developer.android.com/reference/android/bluetooth/BluetoothDevice
-        UUID sppUid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-
-        return (uuids != null && uuids.length > 0) ? uuids[0].getUuid() : sppUid;
+        return (uuids != null && uuids.length > 0) ? uuids[0].getUuid() : UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     }
 
     /**
