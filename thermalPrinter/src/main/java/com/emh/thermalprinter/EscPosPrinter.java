@@ -215,4 +215,36 @@ public class EscPosPrinter extends EscPosPrinterSize {
     public EscPosCharsetEncoding getEncoding() {
         return this.printer.getCharsetEncoding();
     }
+
+    /**
+     * Print all characters of all charset encoding
+     *
+     * @return Fluent interface
+     */
+    public EscPosPrinter printAllCharsetsEncodingCharacters() {
+        this.printer.printAllCharsetsEncodingCharacters();
+        return this;
+    }
+
+    /**
+     * Print all characters of selected charsets encoding
+     *
+     * @param charsetsId Array of charset id to print.
+     * @return Fluent interface
+     */
+    public EscPosPrinter printCharsetsEncodingCharacters(int[] charsetsId) {
+        this.printer.printCharsetsEncodingCharacters(charsetsId);
+        return this;
+    }
+
+    /**
+     * Print all characters of a charset encoding
+     *
+     * @param charsetId Charset id to print.
+     * @return Fluent interface
+     */
+    public EscPosPrinter printCharsetEncodingCharacters(int charsetId) {
+        this.printer.printCharsetEncodingCharacters(charsetId);
+        return this;
+    }
 }
