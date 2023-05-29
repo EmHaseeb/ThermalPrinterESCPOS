@@ -13,7 +13,17 @@ public class TcpConnection extends DeviceConnection {
     private Socket socket = null;
     private String address;
     private int port;
-    private int timeout = 0;
+    private int timeout;
+
+    /**
+     * Create un instance of TcpConnection.
+     *
+     * @param address IP address of the device
+     * @param port    Port of the device
+     */
+    public TcpConnection(String address, int port) {
+        this(address, port, 30);
+    }
 
     /**
      * Create un instance of TcpConnection.
@@ -48,7 +58,6 @@ public class TcpConnection extends DeviceConnection {
         try {
             this.socket = new Socket();
             this.socket.connect(new InetSocketAddress(InetAddress.getByName(this.address), this.port), this.timeout);
-            //https://docs.oracle.com/javase/8/docs/api/java/net/Socket.html#connect-java.net.SocketAddress-int- - A timeout of zero is interpreted as an infinite timeout
             this.outputStream = this.socket.getOutputStream();
             this.data = new byte[0];
         } catch (IOException e) {

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    EscPosPrinter printer = new EscPosPrinter(new TcpConnection(ip, port,30), 203, 65f, 42);
+                    EscPosPrinter printer = new EscPosPrinter(new TcpConnection(ip, port), 203, 65f, 42);
                     printer.openCashBox();
                     printer.disconnectPrinter();
                 } catch (Exception e) {
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    EscPosPrinter printer = new EscPosPrinter(new TcpConnection(ip, port,30), 203, 65f, 42);
+                    EscPosPrinter printer = new EscPosPrinter(new TcpConnection(ip, port), 203, 65f, 42);
                     printer.printFormattedTextAndCut(
                             "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, getApplicationContext().getResources().getDrawableForDensity(R.drawable.testp, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                                     "[L]\n" +
