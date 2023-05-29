@@ -101,28 +101,35 @@ public class EscPosPrinterCommands {
 
         byte[] imageBytes = EscPosPrinterCommands.initImageCommand(bytesByLine, bitmapHeight);
 
-        int i = 8;
+        int i = 8, greyscaleCoefficientInit = 0;
         for (int posY = 0; posY < bitmapHeight; posY++) {
+            int greyscaleCoefficient = greyscaleCoefficientInit;
             for (int j = 0; j < bitmapWidth; j += 8) {
-                StringBuilder stringBinary = new StringBuilder();
+                int b = 0;
                 for (int k = 0; k < 8; k++) {
                     int posX = j + k;
                     if (posX < bitmapWidth) {
                         int color = bitmap.getPixel(posX, posY),
-                                r = (color >> 16) & 0xff,
-                                g = (color >> 8) & 0xff,
-                                b = color & 0xff;
+                                red = (color >> 16) & 255,
+                                green = (color >> 8) & 255,
+                                blue = color & 255;
 
-                        if (r > 160 && g > 160 && b > 160) {
-                            stringBinary.append("0");
-                        } else {
-                            stringBinary.append("1");
+                        if ((red + green + blue) < (greyscaleCoefficient * 51)) {
+                            b |= 1 << (7 - k);
                         }
-                    } else {
-                        stringBinary.append("0");
+
+                        greyscaleCoefficient += 5;
+                        if (greyscaleCoefficient > 15) {
+                            greyscaleCoefficient -= 16;
+                        }
                     }
                 }
-                imageBytes[i++] = (byte) Integer.parseInt(stringBinary.toString(), 2);
+                imageBytes[i++] = (byte) b;
+            }
+
+            greyscaleCoefficientInit += 2;
+            if (greyscaleCoefficientInit > 15) {
+                greyscaleCoefficientInit = 0;
             }
         }
 
@@ -176,16 +183,18 @@ public class EscPosPrinterCommands {
             int x = -1, multipleX = coefficient;
             boolean isBlack = false;
             for (int j = 0; j < bytesByLine; j++) {
-                StringBuilder stringBinary = new StringBuilder();
+                int b = 0;
                 for (int k = 0; k < 8; k++) {
                     if (multipleX == coefficient) {
                         isBlack = ++x < width && byteMatrix.get(x, y) == 1;
                         multipleX = 0;
                     }
-                    stringBinary.append(isBlack ? "1" : "0");
+                    if(isBlack) {
+                        b |= 1 << (7 - k);
+                    }
                     ++multipleX;
                 }
-                lineBytes[j] = (byte) Integer.parseInt(stringBinary.toString(), 2);
+                lineBytes[j] = (byte) b;
             }
 
             for (int multipleY = 0; multipleY < coefficient; ++multipleY) {
@@ -196,7 +205,6 @@ public class EscPosPrinterCommands {
 
         return imageBytes;
     }
-
 
     /**
      * Create new instance of EscPosPrinterCommands.
